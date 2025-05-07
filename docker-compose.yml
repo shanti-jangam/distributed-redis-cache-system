@@ -1,0 +1,144 @@
+version: "3.8"
+
+services:
+    # ZooKeeper for coordination service
+    zookeeper:
+        image: zookeeper:latest
+        environment:
+            - ZOO_MY_ID=1
+            - ZOO_SERVERS=server.1=zookeeper:2888:3888;2181
+            - ZOO_4LW_COMMANDS_WHITELIST=*
+        ports:
+            - "2181:2181"
+            - "2888:2888"
+            - "3888:3888"
+        volumes:
+            - zookeeper_data:/data
+            - zookeeper_datalog:/datalog
+        networks:
+            - cache_network
+
+    # Redis nodes
+    redis-node1:
+        image: redis:alpine
+        command: redis-server --appendonly yes
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data1:/data
+        networks:
+            - cache_network
+
+    redis-node2:
+        image: redis:alpine
+        command: redis-server --appendonly yes --port 6380
+        ports:
+            - "6380:6380"
+        volumes:
+            - redis_data2:/data
+        networks:
+            - cache_network
+
+    redis-node3:
+        image: redis:alpine
+        command: redis-server --appendonly yes --port 6381
+        ports:
+            - "6381:6381"
+        volumes:
+            - redis_data3:/data
+        networks:
+            - cache_network
+
+    # Cache service instances
+    cache-service1:
+        build: .
+        environment:
+            - NODE_ID=node1
+            - REDIS_HOST=redis-node1
+            - REDIS_PORT=6379
+            - ZOOKEEPER_HOSTS=zookeeper:2181
+            - API_PORT=3000
+            - GRPC_PORT=50051
+            - DOCKER_ENV=true
+        ports:
+            - "3000:3000"
+            - "50051:50051"
+        depends_on:
+            - redis-node1
+            - zookeeper
+        networks:
+            - cache_network
+
+    cache-service2:
+        build: .
+        environment:
+            - NODE_ID=node2
+            - REDIS_HOST=redis-node2
+            - REDIS_PORT=6380
+            - ZOOKEEPER_HOSTS=zookeeper:2181
+            - API_PORT=3001
+            - GRPC_PORT=50052
+            - DOCKER_ENV=true
+        ports:
+            - "3001:3001"
+            - "50052:50052"
+        depends_on:
+            - redis-node2
+            - zookeeper
+        networks:
+            - cache_network
+
+    cache-service3:
+        build: .
+        environment:
+            - NODE_ID=node3
+            - REDIS_HOST=redis-node3
+            - REDIS_PORT=6381
+            - ZOOKEEPER_HOSTS=zookeeper:2181
+            - API_PORT=3002
+            - GRPC_PORT=50053
+            - DOCKER_ENV=true
+        ports:
+            - "3002:3002"
+            - "50053:50053"
+        depends_on:
+            - redis-node3
+            - zookeeper
+        networks:
+            - cache_network
+
+    # Prometheus for monitoring
+    prometheus:
+        image: prom/prometheus:latest
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+            - prometheus_data:/prometheus
+        ports:
+            - "9090:9090"
+        networks:
+            - cache_network
+
+    # Grafana for visualization
+    grafana:
+        image: grafana/grafana:latest
+        depends_on:
+            - prometheus
+        ports:
+            - "3100:3000"
+        volumes:
+            - grafana_data:/var/lib/grafana
+        networks:
+            - cache_network
+
+volumes:
+    redis_data1:
+    redis_data2:
+    redis_data3:
+    zookeeper_data:
+    zookeeper_datalog:
+    prometheus_data:
+    grafana_data:
+
+networks:
+    cache_network:
+        driver: bridge

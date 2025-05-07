@@ -1,0 +1,37 @@
+```mermaid
+graph TD
+    subgraph Clients
+        User[User / Test Suite]
+    end
+    subgraph API
+        CacheService1[Cache Service 1]
+        CacheService2[Cache Service 2]
+        CacheService3[Cache Service 3]
+    end
+    subgraph RedisCluster
+        Redis1[Redis Node 1]
+        Redis2[Redis Node 2]
+        Redis3[Redis Node 3]
+    end
+    ZK[ZooKeeper]
+    Prometheus
+    Grafana
+
+    User -->|HTTP/gRPC| CacheService1
+    User -->|HTTP/gRPC| CacheService2
+    User -->|HTTP/gRPC| CacheService3
+
+    CacheService1 -- Redis Protocol --> Redis1
+    CacheService2 -- Redis Protocol --> Redis2
+    CacheService3 -- Redis Protocol --> Redis3
+
+    CacheService1 -- Coordination --> ZK
+    CacheService2 -- Coordination --> ZK
+    CacheService3 -- Coordination --> ZK
+
+    CacheService1 -- Metrics --> Prometheus
+    CacheService2 -- Metrics --> Prometheus
+    CacheService3 -- Metrics --> Prometheus
+
+    Prometheus -- Data Source --> Grafana
+``` 

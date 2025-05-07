@@ -1,0 +1,27 @@
+```mermaid
+graph TD
+    TestSuite[Distributed Redis Cache Test Suite]
+    Basic[Basic Operations]
+    JSON[JSON Values]
+    TTL[TTL Expiration]
+    Load[Load Testing]
+    Fault[Fault Tolerance]
+    Multi[Multi-Node Operations]
+    Metrics[Metrics]
+
+    TestSuite --> Basic
+    TestSuite --> JSON
+    TestSuite --> TTL
+    TestSuite --> Load
+    TestSuite --> Fault
+    TestSuite --> Multi
+    TestSuite --> Metrics
+
+    Basic -->|set/get/delete| CacheService
+    JSON -->|complex objects| CacheService
+    TTL -->|expiration| CacheService
+    Load -->|high volume| CacheService
+    Fault -->|node failure| RedisCluster
+    Multi -->|consistency| RedisCluster
+    Metrics -->|/metrics endpoint| Prometheus
+``` 

@@ -1,0 +1,37 @@
+{
+    "name": "redis-distributed-cache",
+    "version": "1.0.0",
+    "description": "Distributed caching system using Redis",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon src/index.js",
+        "test": "jest",
+        "test:all": "node tests/run-all-tests.js",
+        "test:basic": "node tests/basic/basic-operations.js",
+        "test:json": "node tests/json/json-values.js",
+        "test:ttl": "node tests/ttl/ttl-expiration.js",
+        "test:load": "node tests/load/load-test.js",
+        "test:fault": "node tests/fault-tolerance/node-failure.js",
+        "test:multi": "node tests/multi-node/cross-node.js",
+        "test:metrics": "node tests/metrics/prometheus-metrics.js",
+        "test:check-replication": "node tests/check-replication.js"
+    },
+    "dependencies": {
+        "@grpc/grpc-js": "^1.9.7",
+        "@grpc/proto-loader": "^0.7.10",
+        "axios": "^1.5.0",
+        "cluster": "^0.7.7",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "ioredis": "^5.3.2",
+        "node-zookeeper-client": "^1.1.3",
+        "prom-client": "^14.2.0",
+        "redis": "^4.6.10",
+        "winston": "^3.11.0"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "nodemon": "^3.0.1"
+    }
+}

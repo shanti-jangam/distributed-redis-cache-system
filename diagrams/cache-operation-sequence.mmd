@@ -1,0 +1,13 @@
+```mermaid
+sequenceDiagram
+    participant Client
+    participant CacheService
+    participant RedisNode
+    participant ZooKeeper
+
+    Client->>CacheService: set/get/delete request
+    CacheService->>ZooKeeper: (if needed) Coordination/Discovery
+    CacheService->>RedisNode: Perform operation
+    RedisNode-->>CacheService: Result
+    CacheService-->>Client: Response
+``` 

@@ -1,0 +1,13 @@
+```mermaid
+sequenceDiagram
+    participant CacheService as Cache Service
+    participant Prometheus
+    participant Grafana
+    participant User
+
+    CacheService->>Prometheus: Expose /metrics endpoint
+    Prometheus->>CacheService: Scrape metrics
+    User->>Grafana: View dashboard
+    Grafana->>Prometheus: Query metrics
+    Prometheus->>Grafana: Return metrics data
+``` 
