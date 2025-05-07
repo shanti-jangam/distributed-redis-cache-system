@@ -24,7 +24,7 @@ A distributed caching system that stores data across multiple Redis containers t
 This diagram provides a high-level overview of the distributed cache system. It shows how clients interact with multiple cache service instances, each connected to its own Redis node. ZooKeeper is used for coordination, while Prometheus and Grafana handle monitoring and visualization.
 
 
-<img width="761" alt="Screenshot 2025-05-07 at 12 38 43 AM" src="https://github.iu.edu/sjangam/distributed-redis-cache-system/assets/28692/d7d8169f-74bf-47cf-a9af-e8ecedfc74e4">
+![architecture](https://github.com/user-attachments/assets/e61516cf-ecf0-406e-85e7-89048b7f1b5b)
 
 
 The system consists of the following components:
@@ -56,7 +56,7 @@ The system uses ZooKeeper to solve critical distributed system challenges:
 ### 1. Cache Operation Sequence 
 
 
-<img width="544" alt="Screenshot 2025-05-07 at 1 13 13 AM" src="https://github.iu.edu/sjangam/distributed-redis-cache-system/assets/28692/4afef419-a193-473b-bbca-86552740a19d">
+<img width="544" alt="Screenshot 2025-05-07 at 1 13 13 AM" src="https://github.com/user-attachments/assets/2fcfb1b0-87a0-47dc-b71a-98087e6d8db8" />
 
 
 This sequence diagram illustrates the flow of a typical cache operation (set/get/delete). The client sends a request to the cache service, which may consult ZooKeeper for coordination, performs the operation on the appropriate Redis node, and returns the result to the client.
@@ -64,7 +64,7 @@ This sequence diagram illustrates the flow of a typical cache operation (set/get
 ### 2. Metrics Flow 
 
 
-<img width="542" alt="Screenshot 2025-05-07 at 1 33 12 AM" src="https://github.iu.edu/sjangam/distributed-redis-cache-system/assets/28692/bc77f05b-146d-429d-ba87-ec21445f15b5">
+<img width="542" alt="Screenshot 2025-05-07 at 1 33 12 AM" src="https://github.com/user-attachments/assets/6c7ac65b-d186-41d2-84c0-b6fe44316b86" />
 
 
 This diagram shows how metrics are collected and visualized. The cache service exposes a metrics endpoint, which Prometheus scrapes. Grafana queries Prometheus to visualize these metrics for users.
@@ -72,7 +72,7 @@ This diagram shows how metrics are collected and visualized. The cache service e
 ### 3. Test Coverage 
 
 
-<img width="814" alt="Screenshot 2025-05-07 at 1 55 26 AM" src="https://github.iu.edu/sjangam/distributed-redis-cache-system/assets/28692/1c5f2744-3198-4528-b068-c6386523b4dd">
+<img width="814" alt="Screenshot 2025-05-07 at 1 55 26 AM" src="https://github.com/user-attachments/assets/a5b2af56-0c7c-4a64-bf1e-4b52cc2b6f2e" />
 
 
 This diagram outlines the scope of the test suite. It covers basic cache operations, JSON value handling, TTL expiration, load testing, fault tolerance, multi-node consistency, and metrics exposure. Each test area is mapped to the relevant system component.
@@ -82,7 +82,7 @@ You can find the Mermaid source for these diagrams in the `diagrams/` directory.
 ## Grafana Visualization
 
 
-<img width="1440" alt="Screenshot 2025-05-07 at 12 43 15 AM" src="https://github.iu.edu/sjangam/distributed-redis-cache-system/assets/28692/06dbfacf-eae4-4a53-9342-8e91c9bbd75c">
+<img width="1440" alt="Screenshot 2025-05-07 at 12 43 15 AM" src="https://github.com/user-attachments/assets/7a1164f9-99ba-495c-86dd-cc7869d3f44b" />
 
 
 The Grafana dashboard provides real-time insights into the distributed cache system. It visualizes:
