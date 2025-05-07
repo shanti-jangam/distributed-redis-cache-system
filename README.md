@@ -24,7 +24,7 @@ A distributed caching system that stores data across multiple Redis containers t
 This diagram provides a high-level overview of the distributed cache system. It shows how clients interact with multiple cache service instances, each connected to its own Redis node. ZooKeeper is used for coordination, while Prometheus and Grafana handle monitoring and visualization.
 
 
-![architecture](https://github.com/user-attachments/assets/e61516cf-ecf0-406e-85e7-89048b7f1b5b)
+<img width="753" alt="Screenshot 2025-05-07 at 11 51 34 AM" src="https://github.com/user-attachments/assets/c6ecb072-79fc-42f5-b7e3-c3f6bd15820e" />
 
 
 The system consists of the following components:
